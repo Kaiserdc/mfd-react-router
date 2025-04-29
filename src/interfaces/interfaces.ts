@@ -25,20 +25,15 @@ export interface Episode extends Item {
 }
 
 
-export type SortOrder = 'asc' | 'desc';
-
-
 export interface CategoryListProps<T extends Item> {
     title: string;
     items: T[];
     routePrefix: string;
-    CardComponent?: React.ComponentType<{ item: T }>;
+    CardComponent?: React.ComponentType<{ item: T; routePrefix: string }>;
 }
 
 export interface ListProps<T extends Item> {
     data: T[];
     routePrefix: string;
-    CardComponent?: React.ComponentType<{ item: T }>;
+    CardComponent: React.ComponentType<{ item: T; routePrefix: string }>;
 }
-
-

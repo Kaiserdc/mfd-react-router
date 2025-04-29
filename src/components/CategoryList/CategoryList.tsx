@@ -1,5 +1,6 @@
 import {useMemo} from "react";
 import {List} from "../List/List.tsx";
+import {DefaultCard} from '../Cards/DefaultCard.tsx';
 import {useSort} from "../../hooks/useSort.ts";
 
 import {Item, CategoryListProps} from "../../interfaces";
@@ -7,7 +8,7 @@ import {Item, CategoryListProps} from "../../interfaces";
 
 export default function CategoryList<T extends Item>({title, items, routePrefix, CardComponent}: CategoryListProps<T>) {
     const {sort, toggleSort} = useSort()
-
+    const Card = CardComponent || DefaultCard;
     const sortedData = useMemo(() => {
         return [...items].sort((a, b) => {
             // Сравниваем по имени (или по нужному полю)
@@ -23,6 +24,6 @@ export default function CategoryList<T extends Item>({title, items, routePrefix,
                 Сортировать по {sort === 'asc' ? 'возрастанию' : 'убыванию'}
             </button>
         </div>
-        <List data={sortedData} routePrefix={routePrefix} CardComponent={CardComponent}/>
+        <List data={sortedData} routePrefix={routePrefix} CardComponent={Card}/>
     </>
 }

@@ -1,17 +1,17 @@
 import {Route, Routes} from "react-router-dom";
 import Home from "./pages/Home.tsx";
-import {Character} from "./pages/Character/Сharacter.tsx";
+import {Character} from "./pages/Character/Character";
 import BaseLayout from "./layouts/base.tsx";
 import ErrorPage from "./pages/page404.tsx";
 
 import "./assets/css/styles.css";
 
-import Characters from "./pages/Character/Сharacters.tsx";
-import Locations from "./pages/Location/Locations.tsx";
-import Episodes from "./pages/Episode/Episodes.tsx";
-import Location from "./pages/Location/Location.tsx";
+import Characters from "./pages/Character/Characters";
+import Locations from "./pages/Location/Locations";
+import Episodes from "./pages/Episode/Episodes";
+import Location from "./pages/Location/Location";
 
-import Episode from "./pages/Episode/Episode.tsx";
+import Episode from "./pages/Episode/Episode";
 
 function App() {
     return (
