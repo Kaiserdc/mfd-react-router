@@ -28,12 +28,6 @@ export interface Episode extends Item {
 export type SortOrder = 'asc' | 'desc';
 
 
-export interface UseSortReturn {
-    sort: SortOrder;
-    toggleSort: () => void;
-}
-
-
 export interface CategoryListProps<T extends Item> {
     title: string;
     items: T[];

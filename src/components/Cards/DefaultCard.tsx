@@ -3,13 +3,11 @@ import {formatDate} from "../../lib/utilities.ts";
 
 import {Item} from "../../interfaces";
 
-
 interface DefaultListCardProps {
     item: Item;
     routePrefix: string;
 }
-export const DefaultCard = ({ item, routePrefix }: DefaultListCardProps) => {
-
+export function DefaultCard ({ item, routePrefix }: DefaultListCardProps)  {
     return (
         <div className="card" key={item.id}>
             <div className="card-body">
@@ -20,4 +18,4 @@ export const DefaultCard = ({ item, routePrefix }: DefaultListCardProps) => {
             </div>
         </div>
     );
-};
+}
