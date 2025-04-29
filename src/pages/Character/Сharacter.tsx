@@ -1,14 +1,11 @@
 import {Navigate, useParams} from "react-router-dom";
 import {getCharacterById} from "../../lib/dataService.ts";
-import {Character} from "../../interfaces";
+import {Character as CharacterType} from "../../interfaces";
 
 export function Character() {
     const {id} = useParams<{ id: string }>();
-    const character: Character | undefined = id ? getCharacterById(id) : undefined;
-    //
-    // if (!character) {
-    //     return <Navigate to={'*'}/>
-    // }
+    const character: CharacterType | undefined = id ? getCharacterById(id) : undefined;
+
     if (!character) {
         return <Navigate to="*" replace/>
     }
@@ -28,9 +25,6 @@ export function Character() {
                     <p><strong>Status:</strong> {character.status}</p>
                     <p><strong>Species:</strong> {character.species}</p>
                     <p><strong>Gender:</strong> {character.gender}</p>
-                    {character.origin && <p><strong>Origin:</strong> {character.origin.name}</p>}
-                    {character.location && <p><strong>Location:</strong> {character.location.name}</p>}
-                    {/* при желании можно добавить больше полей */}
                 </div>
             </div>
         </div>

@@ -11,28 +11,17 @@ export interface Character extends Item {
     species: string;
     type: string;
     gender: string;
-    origin: {
-        name: string;
-        url: string;
-    };
-    location: {
-        name: string;
-        url: string;
-    };
     image: string;
-    episode: string[];
 }
 
 export interface Location extends Item {
     type: string;
     dimension: string;
-    residents: string[];
 }
 
 export interface Episode extends Item {
     air_date: string;
     episode: string;
-    characters: string[];
 }
 
 

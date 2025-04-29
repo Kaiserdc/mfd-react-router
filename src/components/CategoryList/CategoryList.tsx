@@ -6,7 +6,7 @@ import {Item, CategoryListProps} from "../../interfaces";
 
 
 export default function CategoryList<T extends Item>({title, items, routePrefix, CardComponent}: CategoryListProps<T>) {
-    const {sort, toggleSort} = useSort<T>()
+    const {sort, toggleSort} = useSort()
 
     const sortedData = useMemo(() => {
         return [...items].sort((a, b) => {
