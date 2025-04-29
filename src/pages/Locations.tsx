@@ -1,5 +1,5 @@
 import locations from '../assets/api/json/location.json'
-import {List} from "../components/List/list.tsx";
+import {List} from "../components/List/List.tsx";
 import {useState} from "react";
 
 

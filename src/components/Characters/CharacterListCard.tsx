@@ -1,11 +1,9 @@
 import {Link, useLocation} from "react-router";
 
-import React from "react";
-
 import {formatDate} from "../../lib/utilites.ts";
 
 
-export const ListItem: React.FC<T> = ({item}) => {
+export const CharacterListCard ({item}: { item: Item & { image: string } }) => {
 
     const {pathname} = useLocation()
 
