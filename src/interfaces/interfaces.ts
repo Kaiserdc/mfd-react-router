@@ -3,7 +3,6 @@ import React from "react";
 export interface Item {
     id: number;
     name: string;
-    url: string;
     created: string;
 }
 
@@ -50,13 +49,13 @@ export interface CategoryListProps<T extends Item> {
     title: string;
     items: T[];
     routePrefix: string;
-    CardComponent?: React.ComponentType<{ item: T }>;
+    CardComponent: React.ComponentType<{ item: T }>;
 }
 
 export interface ListProps<T extends Item> {
     data: T[];
     routePrefix: string;
-    CardComponent?: React.ComponentType<{ item: T }>;
+    CardComponent: React.ComponentType<{ item: T }>;
 }
 
 

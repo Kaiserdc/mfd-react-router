@@ -1,5 +1,5 @@
-// import {getCharacter} from "../lib/utilites";
-import {Navigate, useParams} from "react-router";
+// import {getCharacter} from "../lib/utilities";
+import {Navigate, useParams} from "react-router-dom";
 
 export function Character() {
     // const {id} = useParams();
@@ -10,7 +10,7 @@ export function Character() {
     // }
 
     return <>
-        {/*<h1>{character.name}</h1>*/}
+        <h1>Детальная информация</h1>
         {/*<img className={'mb-4'} src={character.image} alt=''/>*/}
         <ul className="list-unstyled">
             {/*{Object.keys(character).map(key => {*/}
