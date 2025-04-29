@@ -5,7 +5,7 @@ import {useSort} from "../../hooks/useSort.ts";
 import {Item, CategoryListProps} from "../../interfaces";
 
 
-export default function CategoryList({title, items, routePrefix, CardComponent}: CategoryListProps<T>) {
+export default function CategoryList<T extends Item>({title, items, routePrefix, CardComponent}: CategoryListProps<T>) {
     const {sort, toggleSort} = useSort<T>()
 
     const sortedData = useMemo(() => {

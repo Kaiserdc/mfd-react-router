@@ -1,7 +1,8 @@
-import {Link, useLocation} from "react-router";
+import {Link, useLocation} from "react-router-dom";
 
 import {formatDate} from "../../lib/utilites.ts";
 
+import {Item} from "../../interfaces";
 
 export const CharacterListCard ({item}: { item: Item & { image: string } }) => {
 

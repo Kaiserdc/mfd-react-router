@@ -1,8 +1,39 @@
 import React from "react";
 
 export interface Item {
-    id: string;
+    id: number;
     name: string;
+    url: string;
+    created: string;
+}
+
+export interface Character extends Item {
+    status: string;
+    species: string;
+    type: string;
+    gender: string;
+    origin: {
+        name: string;
+        url: string;
+    };
+    location: {
+        name: string;
+        url: string;
+    };
+    image: string;
+    episode: string[];
+}
+
+export interface Location extends Item {
+    type: string;
+    dimension: string;
+    residents: string[];
+}
+
+export interface Episode extends Item {
+    air_date: string;
+    episode: string;
+    characters: string[];
 }
 
 
