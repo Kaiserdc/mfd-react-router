@@ -1,16 +1,14 @@
-import {useSearchParams} from "react-router";
-import {SortType} from "../interfaces";
+import { useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
+export const useSort = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const sortParam =  searchParams.get('sort');
+    const sort = sortParam === 'desc' ? 'desc' : 'asc';
 
-export const useSort = (sortState: SortType = "asc") => {
+    const toggleSort = useCallback(() => {
+        setSearchParams({ sort: sort === 'asc' ? 'desc' : 'asc' });
+    }, [sort, setSearchParams]);
 
-    const [searchParams, setSearchParams] = useSearchParams({sort: sortState})
-
-    const sortSwitch = () => {
-        setSearchParams({ sort: searchParams.get("sort") === "asc" ? "desc" : "asc" });
-
-    };
-
-    return { sortBy: searchParams.get("sort") as SortType, sortSwitch };
-
-}
+    return { sort, toggleSort };
+};
