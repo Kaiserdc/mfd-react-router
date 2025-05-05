@@ -1,12 +1,9 @@
 import {Outlet} from "react-router-dom";
-import {Header} from "../components/header.tsx";
-import AuthStatus from "../components/AuthStatus.tsx";
-
+import {Header} from "../components/Header.tsx";
 
 export default function BaseLayout(){
     return <>
-        <AuthStatus/>
-        <Header/>
+            <Header/>
         <main>
             <div className="container">
                 <Outlet/>

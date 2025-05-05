@@ -12,6 +12,8 @@ import Episodes from "./pages/Episode/Episodes";
 import Location from "./pages/Location/Location";
 
 import Episode from "./pages/Episode/Episode";
+import Login from "./pages/Login/Login.tsx";
+import {PrivateRoute} from "./components/PrivateRoute.tsx";
 
 function App() {
     return (
@@ -19,14 +21,15 @@ function App() {
             <Routes>
                 <Route path="/" element={<BaseLayout/>}>
                     <Route index path={'/'} element={<Home/>}/>
-                    <Route path={'/characters'} element={<Characters/>}/>
-                    <Route path={'/characters/:id'} element={<Character/>}/>
-                    <Route path={'/locations'} element={<Locations/>}/>
-                    <Route path={'/locations/:id'} element={<Location/>}/>
-                    <Route path={'/episodes'} element={<Episodes/>}/>
-                    <Route path={'/episodes/:id'} element={<Episode/>}/>
+                    <Route path={'/characters'} element={<PrivateRoute><Characters/></PrivateRoute>}/>
+                    <Route path={'/characters/:id'} element={<PrivateRoute><Character/></PrivateRoute>}/>
+                    <Route path={'/locations'} element={<PrivateRoute><Locations/></PrivateRoute>}/>
+                    <Route path={'/locations/:id'} element={<PrivateRoute><Location/></PrivateRoute>}/>
+                    <Route path={'/episodes'} element={<PrivateRoute><Episodes/></PrivateRoute>}/>
+                    <Route path={'/episodes/:id'} element={<PrivateRoute><Episode/></PrivateRoute>}/>
+                    <Route path={'/login'} element={<Login/>}/>
                 </Route>
-                <Route path={'*'} element={<ErrorPage />} />
+                <Route path={'*'} element={<ErrorPage/>}/>
 
             </Routes>
         </>

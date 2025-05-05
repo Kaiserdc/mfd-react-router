@@ -1,4 +1,5 @@
 import {NavLink} from "react-router-dom";
+import AuthStatus from "./AuthStatus.tsx";
 
 export const Header = () => {
 
@@ -34,6 +35,9 @@ export const Header = () => {
                     </li>
 
                 </ul>
+                <div className={'auth'}>
+                    <AuthStatus/>
+                </div>
             </nav>
         </div>
     </header>
