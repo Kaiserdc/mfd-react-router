@@ -1,19 +1,27 @@
-import React from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
+import {FormEvent} from 'react';
+import {useLocation, useNavigate, Location} from "react-router-dom";
 import {useAuth} from "../../hooks/useAuth.ts";
 
-function Login() {
+interface LocationState {
+    from: { pathname: string };
+}
+
+export function Login(): JSX.Element {
     const navigate = useNavigate();
     const auth = useAuth();
-    const location = useLocation();
-    const from = location.state.from || '/'
-    const handleSubmit = (e) => {
+    const location = useLocation() as Location & { state?: LocationState };
+
+
+    const fromPath = location.state?.from.pathname ?? '/';
+    const handleSubmit = (e: FormEvent<HTMLFormElement>):void => {
         e.preventDefault()
         const formData = new FormData(e.currentTarget);
-        const username = formData.get('username');
 
-        auth.signIn(username, () => {
-            navigate(from,{replace:true})
+        const raw = formData.get('username');
+        const username = typeof raw === 'string' ? raw : '';
+
+        auth.signIn({name: username}, () => {
+            navigate(fromPath, {replace: true})
         })
 
     }
@@ -25,8 +33,8 @@ function Login() {
                         <div className="card">
                             <div className="card-body">
                                 <div className="form-group mb-3">
-                                    <label htmlFor="username">Username</label>
-                                    <input type="text" name={'username'} className="form-control" id="nameInput"
+                                    <label htmlFor="usernameInput">Username</label>
+                                    <input type="text" name={'username'} className="form-control" id="usernameInput"
                                            placeholder="Enter username"/>
                                 </div>
                                 <button type="submit" className="btn btn-primary">Submit</button>
@@ -38,5 +46,3 @@ function Login() {
         </>
     );
 }
-
-export default Login;

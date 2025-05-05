@@ -1,8 +1,9 @@
 import {Navigate, useParams} from "react-router-dom";
 import {getCharacterById} from "../../lib/dataService.ts";
 import {Character as CharacterType} from "../../interfaces";
+import {JSX} from "react";
 
-export function Character() {
+export function Character():JSX.Element {
     const {id} = useParams<{ id: string }>();
     const character: CharacterType | undefined = id ? getCharacterById(id) : undefined;
 
