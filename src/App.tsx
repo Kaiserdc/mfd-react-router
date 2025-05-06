@@ -1,39 +1,86 @@
-import {Route, Routes} from "react-router-dom";
-import Home from "./pages/Home.tsx";
-import {Character} from "./pages/Character/Character";
-import BaseLayout from "./layouts/base.tsx";
-import ErrorPage from "./pages/page404.tsx";
+import {Outlet, RouterProvider} from "react-router-dom";
+import {lazy, Suspense, JSX} from "react";
+import {createBrowserRouter} from "react-router-dom";
 
 import "./assets/css/styles.css";
 
-import Characters from "./pages/Character/Characters";
-import Locations from "./pages/Location/Locations";
-import Episodes from "./pages/Episode/Episodes";
-import Location from "./pages/Location/Location";
+import {BaseLayout} from "./layouts/base.tsx";
+import {RequireAuth} from "./components/RequireAuth";
 
-import Episode from "./pages/Episode/Episode";
-import {Login} from "./pages/Login/Login.tsx";
-import {RequireAuth} from "./components/RequireAuth.tsx";
+const withSuspense = (el: JSX.Element) => (
+    <Suspense fallback={<div>Loading...</div>}>{el}</Suspense>
+);
 
-function App() {
-    return (
-        <>
-            <Routes>
-                <Route path="/" element={<BaseLayout/>}>
-                    <Route index path={'/'} element={<Home/>}/>
-                    <Route path={'/login'} element={<Login/>}/>
-                    <Route path={'/characters'} element={<RequireAuth><Characters/></RequireAuth>}/>
-                    <Route path={'/characters/:id'} element={<RequireAuth><Character/></RequireAuth>}/>
-                    <Route path={'/locations'} element={<RequireAuth><Locations/></RequireAuth>}/>
-                    <Route path={'/locations/:id'} element={<RequireAuth><Location/></RequireAuth>}/>
-                    <Route path={'/episodes'} element={<RequireAuth><Episodes/></RequireAuth>}/>
-                    <Route path={'/episodes/:id'} element={<RequireAuth><Episode/></RequireAuth>}/>
-                </Route>
-                <Route path={'*'} element={<ErrorPage/>}/>
+const Home = lazy(() =>
+    import("./pages/Home").then((module) => ({
+        default: module.Home
+    })))
+const Login = lazy(() =>
+    import("./pages/Login/Login").then((module) => ({
+        default: module.Login
+    })))
+const Characters = lazy(() => import("./pages/Character/Characters").then(module => ({
+    default: module.Characters
+})))
+const Character = lazy(() => import("./pages/Character/Character").then(module => ({
+    default: module.Character
+})))
+const Locations = lazy(() => import("./pages/Location/Locations").then(module => ({
+    default: module.Locations
+})))
+const Location = lazy(() => import("./pages/Location/Location").then(module => ({
+    default: module.Location
+})))
+const Episodes = lazy(() => import("./pages/Episode/Episodes").then(module => ({
+    default: module.Episodes
+})))
+const Episode = lazy(() => import("./pages/Episode/Episode").then(module => ({
+    default: module.Episode
+})))
 
-            </Routes>
-        </>
-    )
+const ErrorPage = lazy(() => import("./pages/page404").then(module => ({
+    default: module.ErrorPage
+})))
+
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <BaseLayout/>,
+        children: [
+            {index: true, element: withSuspense(<Home/>)},
+            {path: 'login', element: withSuspense(<Login/>)},
+            {
+                path: 'characters',
+                element: withSuspense(<RequireAuth><Outlet/></RequireAuth>),
+                children: [
+                    {index: true, element: withSuspense(<Characters/>)},
+                    {path: ':id', element: withSuspense(<Character/>)},
+                ]
+            },
+            {
+                path: 'locations',
+                element: withSuspense(<RequireAuth><Locations/></RequireAuth>),
+                children: [
+                    {index: true, element: withSuspense(<Locations/>)},
+                    {path: ':id', element: withSuspense(<Location/>)}
+                ]
+            },
+            {
+                path: 'episodes',
+                element: withSuspense(<RequireAuth><Episodes/></RequireAuth>),
+                children: [
+                    {index: true, element: withSuspense(<Episodes/>)},
+                    {path: ':id', element: withSuspense(<Episode/>)}
+                ]
+            },
+        ]
+    },
+    {path: '*', element: withSuspense(<ErrorPage/>)},
+])
+
+export default function App() {
+    return <RouterProvider router={router}/>
 }
 
-export default App
+
