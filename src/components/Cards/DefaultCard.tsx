@@ -7,7 +7,7 @@ interface DefaultListCardProps {
     item: Item;
     routePrefix: string;
 }
-export function DefaultCard ({ item, routePrefix }: DefaultListCardProps)  {
+export function DefaultCard ({ item, routePrefix}: DefaultListCardProps)  {
     return (
         <div className="card" key={item.id}>
             <div className="card-body">
