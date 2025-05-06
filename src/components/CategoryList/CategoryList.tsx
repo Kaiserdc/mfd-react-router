@@ -37,7 +37,6 @@ export default function CategoryList<T extends Item>(
 
     const sortedData = useMemo(() => {
         return [...items].sort((a, b) => {
-            // Сравниваем по имени (или по нужному полю)
             const cmp = a.created.localeCompare(b.created, undefined, {sensitivity: 'base'});
             return sort === 'asc' ? cmp : -cmp;
         });
@@ -50,20 +49,28 @@ export default function CategoryList<T extends Item>(
                 Сортировать по {sort === 'asc' ? 'возрастанию' : 'убыванию'}
             </button>
         </div>
-        {/*<List data={sortedData} routePrefix={routePrefix} CardComponent={Card}/>*/}
         <div className="d-flex gap-3 flex-wrap">
             {sortedData.map((item, index) => {
-                const isLast = index === sortedData.length - 1
-
+                if (index === sortedData.length - 1) {
+                    return (
+                        <div ref={lastItemRef} key={item.id}>
+                            {CardComponent ? (
+                                <CardComponent item={item} routePrefix={routePrefix}/>
+                            ) : (
+                                <DefaultCard item={item} routePrefix={routePrefix}/>
+                            )}
+                        </div>
+                    );
+                }
                 return (
-                    <div title={item.name} key={item.id} ref={isLast ? lastItemRef : undefined}>
+                    <div key={item.id}>
                         {CardComponent ? (
                             <CardComponent item={item} routePrefix={routePrefix}/>
                         ) : (
                             <DefaultCard item={item} routePrefix={routePrefix}/>
                         )}
                     </div>
-                )
+                );
             })}
         </div>
         {loading && <p>Загрузка...</p>}

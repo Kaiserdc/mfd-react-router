@@ -23,7 +23,7 @@ interface ApiResponse<T> {
     results: T[];
 }
 
-export function useGetData<T = any>(
+export function useGetData<T extends {id:number}>(
     {
         url,
         pageNum
@@ -48,7 +48,13 @@ export function useGetData<T = any>(
             cancelToken: source.token
         }).then((res: AxiosResponse<ApiResponse<T>>) => {
             if (cancel) return
-            setData(prevState => [...new Set([...prevState, ...res.data.results])]);
+            setData(prev =>
+                Array.from(
+                    new Map(
+                        [...prev, ...res.data.results].map(item => [item.id, item])
+                    ).values()
+                )
+            );
             setHasMore(res.data.results.length > 0);
             setLoading(false);
         }).catch(err => {
