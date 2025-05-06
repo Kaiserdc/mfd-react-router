@@ -5,8 +5,7 @@ import {Episode} from "../../interfaces";
 import {useState} from "react";
 
 
-export function Episodes(){
-    const [queryData, setQueryData] = useState<string>('');
+export function Episodes() {
     const [page, setPage] = useState<number>(1);
     const {
         data: episodes,
@@ -15,7 +14,6 @@ export function Episodes(){
         hasMore,
     } = useGetData<Episode>({
         url: 'https://rickandmortyapi.com/api/episode',
-        query: queryData,
         pageNum: page,
     });
     if (loading) {
@@ -25,10 +23,15 @@ export function Episodes(){
         return <div>Ошибка при загрузке: {String(error)}</div>;
     }
     return <>
-        <CategoryList
-            title={'Список эпизодов'}
-            items={episodes}
-            routePrefix={'episodes'}
-        />
+        {episodes &&
+            <CategoryList
+                title={'Список эпизодов'}
+                items={episodes}
+                routePrefix={'episodes'}
+                onLoadMore={() => setPage(p => p + 1)}
+                hasMore={hasMore}
+                loading={loading}
+            />
+        }
     </>
 }

@@ -5,9 +5,7 @@ import {Character} from "../../interfaces";
 import {useGetData} from "../../hooks/useGetData.ts";
 
 
-
 export function Characters() {
-    const [queryData, setQueryData] = useState<string>('');
     const [page, setPage] = useState<number>(1);
 
     const {
@@ -17,7 +15,7 @@ export function Characters() {
         hasMore,
     } = useGetData<Character>({
         url: 'https://rickandmortyapi.com/api/character',
-        query: queryData,
+
         pageNum: page,
     });
     if (loading) {
@@ -27,13 +25,16 @@ export function Characters() {
         return <div>Ошибка при загрузке: {String(error)}</div>;
     }
     return <>
-
-        <CategoryList
-            title={'Список персонажей'}
-            items={characters}
-            routePrefix={'characters'}
-            CardComponent={CharacterCard}
-        />
-
+        {characters &&
+            <CategoryList
+                title={'Список персонажей'}
+                items={characters}
+                routePrefix={'characters'}
+                CardComponent={CharacterCard}
+                onLoadMore={() => setPage(p => p + 1)}
+                hasMore={hasMore}
+                loading={loading}
+            />
+        }
     </>
 }

@@ -3,7 +3,6 @@ import axios, {AxiosResponse, CancelTokenSource} from "axios";
 
 interface UseGetDataParams {
     url: string,
-    query?: string,
     pageNum: number,
 }
 
@@ -24,11 +23,12 @@ interface ApiResponse<T> {
     results: T[];
 }
 
-export function useGetData<T = any>({
-                                        url,
-                                        query,
-                                        pageNum
-                                    }: UseGetDataParams): UseGetDataResult<T> {
+export function useGetData<T = any>(
+    {
+        url,
+        pageNum
+    }: UseGetDataParams): UseGetDataResult<T> {
+
     const [data, setData] = useState<T[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -36,6 +36,7 @@ export function useGetData<T = any>({
 
 
     useEffect(() => {
+        let cancel = false
         const source: CancelTokenSource = axios.CancelToken.source();
         setLoading(true)
         setError(false);
@@ -43,12 +44,13 @@ export function useGetData<T = any>({
         axios.get<ApiResponse<T>>(url, {
             params: {
                 page: pageNum,
-                query: query
             },
             cancelToken: source.token
         }).then((res: AxiosResponse<ApiResponse<T>>) => {
-            setData((prevState) => [...prevState, ...res.data.results])
+            if (cancel) return
+            setData(prevState => [...new Set([...prevState, ...res.data.results])]);
             setHasMore(res.data.results.length > 0);
+            setLoading(false);
         }).catch(err => {
             if (axios.isCancel(err)) return
             setError(false)
@@ -57,8 +59,7 @@ export function useGetData<T = any>({
             setLoading(false)
         });
         return () => source.cancel()
-    }, [query, pageNum]);
-    console.log(data)
+    }, [pageNum]);
     return {data, loading, error, hasMore}
 }
 
