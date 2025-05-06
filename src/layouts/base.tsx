@@ -1,13 +1,15 @@
-import {Outlet} from "react-router";
-import {Header} from "../components/header.tsx";
+import {Outlet} from "react-router-dom";
+import {Header} from "../components/Header.tsx";
+import ErrorBoundary from "../components/ErorrBoundry.tsx";
 
-
-export default function BaseLayout(){
+export function BaseLayout() {
     return <>
         <Header/>
         <main>
             <div className="container">
-                <Outlet/>
+                <ErrorBoundary>
+                    <Outlet/>
+                </ErrorBoundary>
             </div>
         </main>
     </>

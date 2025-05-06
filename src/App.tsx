@@ -1,32 +1,86 @@
-import {Route, Routes} from "react-router";
-import Home from "./pages/Home.tsx";
-import CharactersList from "./pages/Сharacters.tsx";
-import {Character} from "./pages/Сharacter.tsx";
-import BaseLayout from "./layouts/base.tsx";
-import ErrorPage from "./pages/page404.tsx";
+import {Outlet, RouterProvider} from "react-router-dom";
+import {lazy, Suspense, JSX} from "react";
+import {createBrowserRouter} from "react-router-dom";
 
 import "./assets/css/styles.css";
-import LocationsList from "./pages/Locations.tsx";
-import EpisodesList from "./pages/Episodes.tsx";
 
-function App() {
-    return (
-        <>
-            <Routes>
-                <Route path="/" element={<BaseLayout/>}>
-                    <Route index path={'/'} element={<Home/>}/>
-                    <Route path={'/characters'} element={<CharactersList/>}/>
-                    <Route path={'/characters/:id'} element={<Character/>}/>
-                    <Route path={'/locations'} element={<LocationsList/>}/>
-                    <Route path={'/locations/:id'} element={<Character/>}/>
-                    <Route path={'/episodes'} element={<EpisodesList/>}/>
-                    <Route path={'/episodes/:id'} element={<Character/>}/>
-                </Route>
-                <Route path={'*'} element={<ErrorPage />} />
+import {BaseLayout} from "./layouts/base.tsx";
+import {RequireAuth} from "./components/RequireAuth";
 
-            </Routes>
-        </>
-    )
+const withSuspense = (el: JSX.Element) => (
+    <Suspense fallback={<div>Loading...</div>}>{el}</Suspense>
+);
+
+const Home = lazy(() =>
+    import("./pages/Home").then((module) => ({
+        default: module.Home
+    })))
+const Login = lazy(() =>
+    import("./pages/Login/Login").then((module) => ({
+        default: module.Login
+    })))
+const Characters = lazy(() => import("./pages/Character/Characters").then(module => ({
+    default: module.Characters
+})))
+const Character = lazy(() => import("./pages/Character/Character").then(module => ({
+    default: module.Character
+})))
+const Locations = lazy(() => import("./pages/Location/Locations").then(module => ({
+    default: module.Locations
+})))
+const Location = lazy(() => import("./pages/Location/Location").then(module => ({
+    default: module.Location
+})))
+const Episodes = lazy(() => import("./pages/Episode/Episodes").then(module => ({
+    default: module.Episodes
+})))
+const Episode = lazy(() => import("./pages/Episode/Episode").then(module => ({
+    default: module.Episode
+})))
+
+const ErrorPage = lazy(() => import("./pages/page404").then(module => ({
+    default: module.ErrorPage
+})))
+
+
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <BaseLayout/>,
+        children: [
+            {index: true, element: withSuspense(<Home/>)},
+            {path: 'login', element: withSuspense(<Login/>)},
+            {
+                path: 'characters',
+                element: withSuspense(<RequireAuth><Outlet/></RequireAuth>),
+                children: [
+                    {index: true, element: withSuspense(<Characters/>)},
+                    {path: ':id', element: withSuspense(<Character/>)},
+                ]
+            },
+            {
+                path: 'locations',
+                element: withSuspense(<RequireAuth><Locations/></RequireAuth>),
+                children: [
+                    {index: true, element: withSuspense(<Locations/>)},
+                    {path: ':id', element: withSuspense(<Location/>)}
+                ]
+            },
+            {
+                path: 'episodes',
+                element: withSuspense(<RequireAuth><Episodes/></RequireAuth>),
+                children: [
+                    {index: true, element: withSuspense(<Episodes/>)},
+                    {path: ':id', element: withSuspense(<Episode/>)}
+                ]
+            },
+        ]
+    },
+    {path: '*', element: withSuspense(<ErrorPage/>)},
+])
+
+export default function App() {
+    return <RouterProvider router={router}/>
 }
 
-export default App
+
