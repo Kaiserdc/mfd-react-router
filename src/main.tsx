@@ -1,10 +1,14 @@
 import {createRoot} from 'react-dom/client'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.tsx'
 import {AuthProvider} from "./context/AuthContext.tsx";
+import {MantineProvider} from "@mantine/core";
+
+import '@mantine/core/styles.css';
 
 createRoot(document.getElementById('root')!).render(
-    <AuthProvider>
-        <App/>
-    </AuthProvider>
+    <MantineProvider>
+        <AuthProvider>
+            <App/>
+        </AuthProvider>
+    </MantineProvider>
 )

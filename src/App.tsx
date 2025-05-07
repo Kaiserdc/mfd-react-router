@@ -2,7 +2,7 @@ import {Outlet, RouterProvider} from "react-router-dom";
 import {lazy, Suspense, JSX} from "react";
 import {createBrowserRouter} from "react-router-dom";
 
-import "./assets/css/styles.css";
+// import "./assets/css/styles.css";
 
 import {BaseLayout} from "./layouts/base.tsx";
 import {RequireAuth} from "./components/RequireAuth";

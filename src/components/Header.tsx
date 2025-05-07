@@ -1,44 +1,41 @@
 import {NavLink} from "react-router-dom";
 import AuthStatus from "./AuthStatus.tsx";
+import {AppShell, Container, Group} from "@mantine/core";
+import {ReactComponent as Logo} from '../assets/img/logo.svg';
+import App from "../App.tsx";
 
+interface LinkItem {
+    link: string;
+    label: string;
+}
+
+const links: LinkItem[] = [
+    {link: '/', label: 'Главная',},
+    {link: '/characters', label: 'Персонажи',},
+    {link: '/episodes', label: 'Эпизоды',},
+    {link: '/locations', label: 'Локации',}
+]
 export const Header = () => {
+    const linkItems = links.map((link, index) => {
+        <NavLink
+            key={index}
+            to={link.link}
+            className={({isActive}) =>
+                isActive ? "active" : ""
+            }
+        >
+            {link.label}
+        </NavLink>
+    })
+    return (
+        <AppShell.Header p={16}>
+            <Container>
+                <Group>
+                    <Logo/>
+                </Group>
+                Header
+            </Container>
+        </AppShell.Header>
 
-    return <header className={'mb-4'}>
-        <div className="container">
-            <nav className="navbar bg-body-tertiary px-4">
-                <ul className="navbar-nav d-flex flex-row gap-3 align-items-center justify-content-center me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
-                        <NavLink
-                            className={({isActive}) => isActive ? "nav-link active" : "nav-link"}
-                            to={'/'} end>Главная</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink
-                            className={({isActive}) =>
-                                isActive ? "nav-link active" : "nav-link"
-                            }
-                            to="/characters">Персонажи</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink
-                            className={({isActive}) =>
-                                isActive ? "nav-link active" : "nav-link"
-                            }
-                            to="/episodes">Эпизоды</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink
-                            className={({isActive}) =>
-                                isActive ? "nav-link active" : "nav-link"
-                            }
-                            to="/locations">Локации</NavLink>
-                    </li>
-
-                </ul>
-                <div className={'auth'}>
-                    <AuthStatus/>
-                </div>
-            </nav>
-        </div>
-    </header>
+    )
 }
