@@ -1,4 +1,4 @@
-import CategoryList from "../../components/CategoryList/CategoryList";
+import {CategoryList} from "../../components/CategoryList";
 import {CharacterCard} from "../../components/Cards/CharacterCard";
 import {useState} from "react";
 import {Character} from "../../interfaces";
@@ -30,7 +30,7 @@ export function Characters() {
                 title={'Список персонажей'}
                 items={characters}
                 routePrefix={'characters'}
-                CardComponent={CharacterCard}
+                ComponentCard={CharacterCard}
                 onLoadMore={() => setPage(p => p + 1)}
                 hasMore={hasMore}
                 loading={loading}

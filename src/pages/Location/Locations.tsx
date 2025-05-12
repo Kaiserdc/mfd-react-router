@@ -1,4 +1,4 @@
-import CategoryList from "../../components/CategoryList/CategoryList.tsx";
+import {CategoryList} from "../../components/CategoryList/";
 import {useState} from "react";
 import {useGetData} from "../../hooks/useGetData.ts";
 import {Episode} from "../../interfaces";

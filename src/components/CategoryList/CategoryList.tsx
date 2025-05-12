@@ -1,11 +1,11 @@
 import {useCallback, useMemo, useRef} from "react";
 import {DefaultCard} from '../Cards/DefaultCard.tsx';
 import {useSort} from "../../hooks/useSort.ts";
-
+import {Button, Group} from "@mantine/core";
 import {Item, CategoryListProps} from "../../interfaces";
+import {IconSortDescendingLetters, IconSortAscendingLetters} from '@tabler/icons-react'
 
-
-export default function CategoryList<T extends Item>(
+export function CategoryList<T extends Item>(
     {
         title,
         items,
@@ -44,12 +44,13 @@ export default function CategoryList<T extends Item>(
 
     return <>
         <h1>{title}</h1>
-        <div className="my-3">
-            <button className={'btn-outline-secondary'} onClick={toggleSort}>
+        <Group mb={16}>
+            <Button leftSection={sort === 'asc' ? <IconSortAscendingLetters/> : <IconSortDescendingLetters/>}
+                    onClick={toggleSort}>
                 Сортировать по {sort === 'asc' ? 'возрастанию' : 'убыванию'}
-            </button>
-        </div>
-        <div className="d-flex gap-3 flex-wrap">
+            </Button>
+        </Group>
+        <Group gap={16}>
             {sortedData.map((item, index) => {
                 if (index === sortedData.length - 1) {
                     return (
@@ -72,7 +73,7 @@ export default function CategoryList<T extends Item>(
                     </div>
                 );
             })}
-        </div>
+        </Group>
         {loading && <p>Загрузка...</p>}
     </>
 }

@@ -2,26 +2,29 @@ import {Link} from "react-router-dom";
 import {formatDate} from "../../lib/utilities.ts";
 
 import {Character} from "../../interfaces";
+import {Button, Card, Text, Image} from "@mantine/core";
+import classes from "./Card.module.css";
 
 interface CharacterListCardProps {
     item: Character;
     routePrefix: string;
 }
 
-export function CharacterCard({ item, routePrefix }: CharacterListCardProps) {
+export function CharacterCard({item, routePrefix}: CharacterListCardProps) {
+    console.log(item)
     return (
-        <div className="card">
+        <Card withBorder p={'md'} className={classes.card}>
             {item.image &&
-                <div className="card-img-top">
-                    <img className={'img-fluid'} src={item.image} alt={item.name}/>
-                </div>
+                <Card.Section>
+                    <Image src={item.image} alt={item.name}/>
+                </Card.Section>
             }
-            <div className="card-body">
-                <h6 className={'mb-2'}>{item.name}</h6>
-                <div className="fs-6 text-muted mb-3 text-xs">Создан:<br/> {formatDate(item.created)}</div>
-                <Link className={'btn btn-outline-secondary'}
-                      to={`/${routePrefix}/${item.id}`}>Подробнее</Link>
-            </div>
-        </div>
+            <Card.Section className={classes.section}>
+                <Text fz={'lg'} fw={500}>{item.name}</Text>
+                <Text fz="sm" mt="xs" mb={'sm'}>Создан: {formatDate(item.created)}</Text>
+                <Button component={Link}
+                        to={`/${routePrefix}/${item.id}`}>Подробнее</Button>
+            </Card.Section>
+        </Card>
     )
 }

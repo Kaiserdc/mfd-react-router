@@ -29,7 +29,7 @@ export interface CategoryListProps<T extends Item> {
     title: string;
     items: T[];
     routePrefix: string;
-    CardComponent?: React.ComponentType<{ item: T; routePrefix: string }>;
+    ComponentCard?: React.ComponentType<{ item: T; routePrefix: string }>;
     onLoadMore?: () => void;
     hasMore?: boolean;
     loading?: boolean;
@@ -38,5 +38,5 @@ export interface CategoryListProps<T extends Item> {
 export interface ListProps<T extends Item> {
     data: T[];
     routePrefix: string;
-    CardComponent: React.ComponentType<{ item: T; routePrefix: string }>;
+    ComponentCard: React.ComponentType<{ item: T; routePrefix: string }>;
 }
