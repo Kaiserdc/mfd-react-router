@@ -11,7 +11,6 @@ interface CharacterListCardProps {
 }
 
 export function CharacterCard({item, routePrefix}: CharacterListCardProps) {
-    console.log(item)
     return (
         <Card withBorder p={'md'} className={classes.card}>
             {item.image &&

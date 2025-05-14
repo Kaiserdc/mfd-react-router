@@ -1,4 +1,4 @@
-import {CategoryList} from "../../components/CategoryList/";
+import {List} from "../../components/List";
 import {useState} from "react";
 import {useGetData} from "../../hooks/useGetData.ts";
 import {Episode} from "../../interfaces";
@@ -22,7 +22,7 @@ export function Locations() {
     }
     return <>
         {locations &&
-            <CategoryList
+            <List
                 title={'Список локаций'}
                 items={locations}
                 routePrefix={'locations'}

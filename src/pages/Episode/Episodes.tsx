@@ -1,4 +1,4 @@
-import {CategoryList} from '../../components/CategoryList'
+import {List} from '../../components/List'
 
 import {useGetData} from "../../hooks/useGetData.ts";
 import {Episode} from "../../interfaces";
@@ -24,7 +24,7 @@ export function Episodes() {
     }
     return <>
         {episodes &&
-            <CategoryList
+            <List
                 title={'Список эпизодов'}
                 items={episodes}
                 routePrefix={'episodes'}
