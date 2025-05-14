@@ -1,13 +1,14 @@
-import {List} from "../../components/List";
+import {List} from "../../components/List/List";
 import {CharacterCard} from "../../components/Cards/CharacterCard";
-import {useState} from "react";
+import {useCallback, useRef, useState} from "react";
 import {Character} from "../../interfaces";
 import {useGetData} from "../../hooks/useGetData.ts";
+import {useIntersection} from "../../hooks/useIntersection.ts";
 
 
 export function Characters() {
     const [page, setPage] = useState<number>(1);
-
+    const lastItemRef  = useRef<HTMLDivElement | null>(null)
     const {
         data: characters,
         loading,
@@ -15,26 +16,25 @@ export function Characters() {
         hasMore,
     } = useGetData<Character>({
         url: 'https://rickandmortyapi.com/api/character',
-
         pageNum: page,
     });
-    if (loading) {
-        return <div>Загрузка...</div>;
-    }
-    if (error) {
-        return <div>Ошибка при загрузке: {String(error)}</div>;
-    }
-    return <>
-        {characters &&
-            <List
-                title={'Список персонажей'}
-                items={characters}
-                routePrefix={'characters'}
-                ComponentCard={CharacterCard}
-                onLoadMore={() => setPage(p => p + 1)}
-                hasMore={hasMore}
-                loading={loading}
-            />
+
+    const handleIntersect = useCallback(() => {
+        if (!loading && hasMore) {
+            setPage(p => p + 1)
         }
+    },[loading,hasMore])
+    useIntersection(lastItemRef, handleIntersect)
+
+    return <>
+        <h1>Список персонажей</h1>
+              <List
+                items={characters}
+                renderItem={(item:Character)=>(<CharacterCard item={item} routePrefix={'characters'}/>)}
+                loading={loading}
+                error={error}
+                lastItemRef={lastItemRef}
+              />
+
     </>
 }

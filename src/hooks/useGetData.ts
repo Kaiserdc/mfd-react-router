@@ -9,7 +9,7 @@ interface UseGetDataParams {
 interface UseGetDataResult<T> {
     data: T[] | null,
     loading: boolean,
-    error: unknown,
+    error: Error|null,
     hasMore: boolean;
 }
 
@@ -23,7 +23,7 @@ interface ApiResponse<T> {
     results: T[];
 }
 
-export function useGetData<T extends {id:number}>(
+export function useGetData<T extends { id: number }>(
     {
         url,
         pageNum
@@ -31,15 +31,14 @@ export function useGetData<T extends {id:number}>(
 
     const [data, setData] = useState<T[]>([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState<Error|null>(null);
     const [hasMore, setHasMore] = useState<boolean>(false);
 
 
     useEffect(() => {
-        let cancel = false
         const source: CancelTokenSource = axios.CancelToken.source();
         setLoading(true)
-        setError(false);
+        setError(null);
 
         axios.get<ApiResponse<T>>(url, {
             params: {
@@ -47,7 +46,6 @@ export function useGetData<T extends {id:number}>(
             },
             cancelToken: source.token
         }).then((res: AxiosResponse<ApiResponse<T>>) => {
-            if (cancel) return
             setData(prev =>
                 Array.from(
                     new Map(
@@ -55,17 +53,18 @@ export function useGetData<T extends {id:number}>(
                     ).values()
                 )
             );
-            setHasMore(res.data.results.length > 0);
-            setLoading(false);
+            setHasMore(Boolean(res.data.info.next));
         }).catch(err => {
-            if (axios.isCancel(err)) return
-            setError(false)
-            console.error(err)
+            if (axios.isCancel(err)) {
+                setError(err instanceof Error ? err: new Error('Неизвестная ошибка'))
+                console.error(err)
+            }
         }).finally(() => {
             setLoading(false)
         });
         return () => source.cancel()
-    }, [pageNum]);
+    }, [pageNum, url]);
+
     return {data, loading, error, hasMore}
 }
 
