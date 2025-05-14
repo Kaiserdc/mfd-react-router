@@ -12,6 +12,8 @@ import Episodes from "./pages/Episode/Episodes";
 import Location from "./pages/Location/Location";
 
 import Episode from "./pages/Episode/Episode";
+import {Login} from "./pages/Login/Login.tsx";
+import {RequireAuth} from "./components/RequireAuth.tsx";
 
 function App() {
     return (
@@ -19,14 +21,15 @@ function App() {
             <Routes>
                 <Route path="/" element={<BaseLayout/>}>
                     <Route index path={'/'} element={<Home/>}/>
-                    <Route path={'/characters'} element={<Characters/>}/>
-                    <Route path={'/characters/:id'} element={<Character/>}/>
-                    <Route path={'/locations'} element={<Locations/>}/>
-                    <Route path={'/locations/:id'} element={<Location/>}/>
-                    <Route path={'/episodes'} element={<Episodes/>}/>
-                    <Route path={'/episodes/:id'} element={<Episode/>}/>
+                    <Route path={'/login'} element={<Login/>}/>
+                    <Route path={'/characters'} element={<RequireAuth><Characters/></RequireAuth>}/>
+                    <Route path={'/characters/:id'} element={<RequireAuth><Character/></RequireAuth>}/>
+                    <Route path={'/locations'} element={<RequireAuth><Locations/></RequireAuth>}/>
+                    <Route path={'/locations/:id'} element={<RequireAuth><Location/></RequireAuth>}/>
+                    <Route path={'/episodes'} element={<RequireAuth><Episodes/></RequireAuth>}/>
+                    <Route path={'/episodes/:id'} element={<RequireAuth><Episode/></RequireAuth>}/>
                 </Route>
-                <Route path={'*'} element={<ErrorPage />} />
+                <Route path={'*'} element={<ErrorPage/>}/>
 
             </Routes>
         </>

@@ -1,7 +1,8 @@
 import CategoryList from "../../components/CategoryList/CategoryList.tsx";
 import locationsData from '../../assets/api/json/location.json'
+import {JSX} from "react";
 
-export default function Locations() {
+export default function Locations(): JSX.Element {
     return <>
         <CategoryList
             title={'Список локаций'}

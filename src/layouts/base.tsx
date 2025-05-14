@@ -1,10 +1,9 @@
 import {Outlet} from "react-router-dom";
-import {Header} from "../components/header.tsx";
-
+import {Header} from "../components/Header.tsx";
 
 export default function BaseLayout(){
     return <>
-        <Header/>
+            <Header/>
         <main>
             <div className="container">
                 <Outlet/>

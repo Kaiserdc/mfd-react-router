@@ -1,8 +1,9 @@
 import {Navigate, useParams} from "react-router-dom";
 import {getLocationById} from "../../lib/dataService.ts";
 import {Location as LocationType} from "../../interfaces";
+import {JSX} from "react";
 
-export default function Location() {
+export default function Location():JSX.Element {
     const {id} = useParams<{ id: string }>();
     const location: LocationType | undefined = id ? getLocationById(id) : undefined;
 
