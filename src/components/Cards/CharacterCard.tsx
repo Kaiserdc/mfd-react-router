@@ -10,7 +10,7 @@ interface CharacterListCardProps {
 
 export function CharacterCard({ item, routePrefix }: CharacterListCardProps) {
     return (
-        <div className="card" key={item.id}>
+        <div className="card">
             {item.image &&
                 <div className="card-img-top">
                     <img className={'img-fluid'} src={item.image} alt={item.name}/>

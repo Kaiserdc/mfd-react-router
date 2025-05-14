@@ -3,7 +3,7 @@ import {getEpisodeById} from "../../lib/dataService.ts";
 import {Episode as EpisodeType} from "../../interfaces";
 import {JSX} from "react";
 
-export default function Episode():JSX.Element {
+export function Episode():JSX.Element {
     const {id} = useParams<{ id: string }>();
     const episode: EpisodeType | undefined = id ? getEpisodeById(id) : undefined;
 

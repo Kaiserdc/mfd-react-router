@@ -1,4 +1,4 @@
-import React from "react";
+import {ReactNode, RefObject} from "react";
 
 export interface Item {
     id: number;
@@ -25,15 +25,11 @@ export interface Episode extends Item {
 }
 
 
-export interface CategoryListProps<T extends Item> {
-    title: string;
+export interface ListProps<T extends Item> {
     items: T[];
-    routePrefix: string;
-    CardComponent?: React.ComponentType<{ item: T; routePrefix: string }>;
+    loading: boolean;
+    error: unknown;
+    lastItemRef: RefObject<HTMLElement | null>;
+    renderItem: (item: T) => ReactNode;
 }
 
-export interface ListProps<T extends Item> {
-    data: T[];
-    routePrefix: string;
-    CardComponent: React.ComponentType<{ item: T; routePrefix: string }>;
-}
