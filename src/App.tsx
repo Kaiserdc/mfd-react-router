@@ -63,7 +63,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'locations',
-                element: withSuspense(<RequireAuth><Locations/></RequireAuth>),
+                element: withSuspense(<RequireAuth><Outlet/></RequireAuth>),
                 children: [
                     {index: true, element: withSuspense(<Locations/>)},
                     {path: ':id', element: withSuspense(<Location/>)}
@@ -71,7 +71,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'episodes',
-                element: withSuspense(<RequireAuth><Episodes/></RequireAuth>),
+                element: withSuspense(<RequireAuth><Outlet/></RequireAuth>),
                 children: [
                     {index: true, element: withSuspense(<Episodes/>)},
                     {path: ':id', element: withSuspense(<Episode/>)}
