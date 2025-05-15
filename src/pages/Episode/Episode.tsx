@@ -1,9 +1,8 @@
 import {Navigate, useParams} from "react-router-dom";
 import {getEpisodeById} from "../../lib/dataService.ts";
 import {Episode as EpisodeType} from "../../interfaces";
-import {JSX} from "react";
 
-export function Episode():JSX.Element {
+export function Episode(){
     const {id} = useParams<{ id: string }>();
     const episode: EpisodeType | undefined = id ? getEpisodeById(id) : undefined;
 

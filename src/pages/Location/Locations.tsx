@@ -1,9 +1,9 @@
 import {useCallback, useRef, useState} from "react";
-import {useGetData} from "../../hooks/useGetData.ts";
+import {DefaultCard} from "../../components/Cards";
+import {useGetData, useIntersection} from "../../hooks";
+import {List} from "../../components/List";
+
 import {Episode} from "../../interfaces";
-import {useIntersection} from "../../hooks/useIntersection.ts";
-import {List} from "../../components/List/List.tsx";
-import {DefaultCard} from "../../components/Cards/DefaultCard.tsx";
 
 export function Locations() {
     const [page, setPage] = useState<number>(1);
