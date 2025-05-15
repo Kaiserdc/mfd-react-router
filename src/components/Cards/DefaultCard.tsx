@@ -2,6 +2,8 @@ import {Link} from "react-router-dom";
 import {formatDate} from "../../lib/utilities.ts";
 
 import {Item} from "../../interfaces";
+import {Button, Card, Text} from "@mantine/core";
+import classes from "./Card.module.css";
 
 interface DefaultListCardProps {
     item: Item;
@@ -9,13 +11,13 @@ interface DefaultListCardProps {
 }
 export function DefaultCard ({ item, routePrefix}: DefaultListCardProps)  {
     return (
-        <div className="card">
-            <div className="card-body">
-                <h6 className={'mb-2'}>{item.name}</h6>
-                <div className="fs-6 text-muted mb-3 text-xs">Создан:<br/> {formatDate(item.created)}</div>
-                <Link className={'btn btn-outline-secondary'}
-                      to={`/${routePrefix}/${item.id}`}>Подробнее</Link>
-            </div>
-        </div>
+        <Card withBorder p={'md'} className={classes.card}>
+            <Card.Section className={classes.section}>
+                <Text fz={'lg'} fw={500}>{item.name}</Text>
+                <Text fz="sm" mt="xs" mb={'sm'}>Создан: {formatDate(item.created)}</Text>
+                <Button component={Link}
+                        to={`/${routePrefix}/${item.id}`}>Подробнее</Button>
+            </Card.Section>
+        </Card>
     );
 }

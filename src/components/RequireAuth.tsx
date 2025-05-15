@@ -1,5 +1,5 @@
 import {ReactNode} from "react";
-import {useAuth} from "../hooks/useAuth.ts";
+import {useAuth} from "../hooks/";
 import {Navigate, useLocation} from "react-router-dom";
 
 interface PrivateRouteProps {

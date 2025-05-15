@@ -7,7 +7,7 @@ interface UseGetDataParams {
 }
 
 interface UseGetDataResult<T> {
-    data: T[] | null,
+    data: T[] | [],
     loading: boolean,
     error: Error|null,
     hasMore: boolean;

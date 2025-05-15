@@ -6,9 +6,12 @@ import {createBrowserRouter} from "react-router-dom";
 
 import {BaseLayout} from "./layouts/base.tsx";
 import {RequireAuth} from "./components/RequireAuth";
+import {Loader} from "@mantine/core";
 
 const withSuspense = (el: JSX.Element) => (
-    <Suspense fallback={<div>Loading...</div>}>{el}</Suspense>
+    <Suspense fallback={
+        <Loader color="blue" size="lg" pos="absolute" top="50%" left="50%" style={{ transform: 'translate(-50%, -50%)' }} />}
+    >{el}</Suspense>
 );
 
 const Home = lazy(() =>

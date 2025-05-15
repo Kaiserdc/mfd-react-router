@@ -1,7 +1,9 @@
 import {useMemo} from "react";
-import {useSort} from "../../hooks/useSort.ts";
+import {useSort} from "../../hooks/";
 import {Item, ListProps} from "../../interfaces";
 import { RefObject } from "react";
+import {Box, Button, Center, Group, Loader, SimpleGrid} from "@mantine/core";
+import {IconSortAscendingLetters, IconSortDescendingLetters} from "@tabler/icons-react";
 
 
 export function List<T extends Item>({
@@ -22,16 +24,18 @@ export function List<T extends Item>({
 
     return <>
         {error &&
-            <div className="col-span-full text-red-500 text-center">Ошибка загрузки. {String(error)}</div>
+            <Center maw={400} h={100}>
+                <Box color="var(--mantine-color-red)">Ошибка загрузки. {String(error)}</Box>
+            </Center>
         }
 
-        <div className="my-3">
-            <button className={'btn-outline-secondary'} onClick={toggleSort}>
+        <Group mb={16}>
+            <Button leftSection={sort === 'asc' ? <IconSortAscendingLetters/> : <IconSortDescendingLetters/>}  onClick={toggleSort}>
                 Сортировать по {sort === 'asc' ? 'возрастанию' : 'убыванию'}
-            </button>
-        </div>
+            </Button>
+        </Group>
 
-        <div className="d-flex gap-3 flex-wrap">
+        <SimpleGrid cols={4}>
             {sortedData.map((item, index) => {
                 const isLast = index === sortedData.length - 1;
                 return (
@@ -41,7 +45,8 @@ export function List<T extends Item>({
                     </div>
                 );
             })}
-            {loading && <p>Загрузка...</p>}
-        </div>
+
+            {loading &&  <Loader color="blue" size="lg" pos="absolute" top="50%" left="50%" style={{ transform: 'translate(-50%, -50%)' }} />}
+        </SimpleGrid>
     </>
 }
