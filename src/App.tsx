@@ -2,8 +2,6 @@ import {Outlet, RouterProvider} from "react-router-dom";
 import {lazy, Suspense, JSX} from "react";
 import {createBrowserRouter} from "react-router-dom";
 
-// import "./assets/css/styles.css";
-
 import {BaseLayout} from "./layouts/base.tsx";
 import {RequireAuth} from "./components/RequireAuth";
 import {Loader} from "@mantine/core";
@@ -83,14 +81,7 @@ const router = createBrowserRouter([
 ])
 
 export default function App() {
-    // if ('serviceWorker' in navigator) {
-    //     window.addEventListener('load', () => {
-    //         navigator.serviceWorker.register('/sw.js')
-    //             .then(() => console.log('SW registered '))
-    //             .catch((err) => console.error('SW registration failed', err));
-    //     });
-    // }
-    return <RouterProvider router={router}/>
+       return <RouterProvider router={router}/>
 }
 
 

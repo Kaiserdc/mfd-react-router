@@ -5,21 +5,14 @@ import {MantineProvider} from "@mantine/core";
 
 import '@mantine/core/styles.css';
 
-// import { registerSW } from 'virtual:pwa-register';
-//
-// const updateSW = registerSW({
-//     onRegisteredSW(){
-//         console.log('SW зарегестрирован');
-//     },
-//     onNeedRefresh() {
-//         console.log('Доступно обновление');
-//         updateSW(true);
-//     },
-//     onOfflineReady(){
-//         console.log('Приложение готово к работе офлайн');
-//     }
-//
-// })
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW({
+    onOfflineReady() {
+        console.log('PWA is ready to work offline')
+    }
+})
+
 createRoot(document.getElementById('root')!).render(
     <MantineProvider>
         <AuthProvider>
