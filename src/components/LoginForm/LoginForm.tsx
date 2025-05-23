@@ -1,7 +1,7 @@
 import {Button, Container, Paper, TextInput, Title} from "@mantine/core";
 import {Location, useLocation, useNavigate} from "react-router-dom";
-import {useAuth} from "../../hooks/useAuth.ts";
-import {FormEvent} from "react";
+import {useAuth} from "../../hooks"
+import {FormEvent} from "react"
 import classes from "./LoginForm.module.css";
 interface LocationState {
     from: { pathname: string };
