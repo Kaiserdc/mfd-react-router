@@ -1,4 +1,4 @@
-import {createContext, JSX, ReactNode, useState} from "react";
+import {createContext, ReactNode, useState} from "react";
 
 export interface User {
     name: string;
@@ -16,7 +16,7 @@ interface AuthProviderProps {
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({children}: AuthProviderProps):JSX.Element {
+export function AuthProvider({children}: AuthProviderProps) {
     const [user, setUser] = useState<User | null>(() => {
         const storedUser = localStorage.getItem("user");
         return storedUser ? JSON.parse(storedUser) : null;

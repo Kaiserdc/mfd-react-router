@@ -1,11 +1,11 @@
 import {AuthContextType} from "../context/AuthContext.tsx";
 import {Link, useNavigate} from "react-router-dom";
 import {useAuth} from "../hooks/useAuth";
-import {JSX} from "react";
+import {Button, Group} from "@mantine/core";
 
 
-export function AuthStatus({}):JSX.Element {
-    const auth:AuthContextType = useAuth()
+export function AuthStatus({}) {
+    const auth: AuthContextType = useAuth()
     const navigate = useNavigate();
     const handleSignOut = () => {
         auth.signOut(() => {
@@ -13,13 +13,26 @@ export function AuthStatus({}):JSX.Element {
         })
     }
     if (!auth.user) {
-        return <>You are not authorized.
-            Please <Link to={'login'}>login</Link></>;
+        return <Group gap={3}>
+            You are not authorized.
+            Please
+            <Button
+                px={6}
+                component={Link}
+                to={'login'}
+                variant="transparent">
+                Sign In
+            </Button>
+        </Group>
     }
     return (
         <>
             <span className="me-2">Welcome user {auth.user.name}</span>
-            <button onClick={handleSignOut}>Sign out</button>
+            <Button
+                variant="filled"
+                onClick={() => handleSignOut()}>
+                Sign out
+            </Button>
         </>
     );
 }

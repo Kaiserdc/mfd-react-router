@@ -1,10 +1,9 @@
-import {useGetData} from "../../hooks/useGetData.ts";
+import {useGetData,useIntersection} from "../../hooks/";
 import { Episode} from "../../interfaces";
 import {useCallback, useRef, useState} from "react";
-import {List} from "../../components/List/List.tsx";
+import {List} from "../../components/List";
+import {DefaultCard} from "../../components/Cards";
 
-import {useIntersection} from "../../hooks/useIntersection.ts";
-import {DefaultCard} from "../../components/Cards/DefaultCard.tsx";
 
 
 export function Episodes() {

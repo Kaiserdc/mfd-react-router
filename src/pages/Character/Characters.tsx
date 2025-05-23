@@ -1,9 +1,9 @@
-import {List} from "../../components/List/List";
-import {CharacterCard} from "../../components/Cards/CharacterCard";
-import {useCallback, useRef, useState} from "react";
+import {CharacterCard} from "../../components/Cards";
+import{useCallback, useRef, useState} from "react";
 import {Character} from "../../interfaces";
-import {useGetData} from "../../hooks/useGetData.ts";
-import {useIntersection} from "../../hooks/useIntersection.ts";
+import {useGetData,useIntersection} from "../../hooks";
+import {List} from "../../components/List";
+
 
 
 export function Characters() {
@@ -17,7 +17,7 @@ export function Characters() {
     } = useGetData<Character>({
         url: 'https://rickandmortyapi.com/api/character',
         pageNum: page,
-    });
+    })
 
     const handleIntersect = useCallback(() => {
         if (!loading && hasMore) {
